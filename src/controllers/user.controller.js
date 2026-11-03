@@ -340,8 +340,18 @@ export const forgotPassword = async (req, res) => {
 
     const resetPasswordUrl = `http://localhost:3000/reset-password/${token}`
 
-
     ///send mail logic
+
+     await sendEmail({
+      to: user.email,
+      subject: "Reset your password",
+      html: `
+          <h2>Password Reset Request</h2>
+          <p>Click on the link below to reset your password</p>
+          <a href = "${resetURL}" target= "_blank">${resetURL}</a>
+          <p>If you didn't request this, please ignore this email</p>`,
+    });
+    console.log("Email sent to", user.email);
 
 
     return res.status(200).json({
